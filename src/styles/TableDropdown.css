@@ -1,0 +1,9 @@
+.dropdown-container {
+    margin: 10px;
+}
+
+.dropdown {
+    margin-right: 20px;
+    padding: 5px;
+    border-radius: 3px;
+}

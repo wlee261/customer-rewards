@@ -3,6 +3,8 @@ import TableDropdown from "./TableDropdown";
 
 import { fetchAllCustomerIds } from "../api/fetchTransactionData.api";
 
+import "../styles/TableHeader.css";
+
 const TableHeader = ({
   lastThreeMonths,
   selectedCustomer,
@@ -27,21 +29,27 @@ const TableHeader = ({
   }, [monthlyRewardPoints]);
 
   return (
-    <div>
-      <h2>Showing: {selectedCustomer}</h2>
-      <h3>Total Points: {totalPoints}</h3>
-      <TableDropdown
-        dropdownOptions={customerIds}
-        dropdownType="Customers"
-        dropdownValue={selectedCustomer}
-        setValue={setSelectedCustomer}
-      />
-      <TableDropdown
-        dropdownOptions={lastThreeMonths}
-        dropdownType="Months"
-        dropdownValue={selectedMonth}
-        setValue={setSelectedMonth}
-      />
+    <div className="header-container">
+      <div className="info-heading-container">
+        <h2>Showing: {selectedCustomer}</h2>
+        <h3>Total Points: {totalPoints}</h3>
+      </div>
+      <div className="dropdown-container">
+        <span>Customer: </span>
+        <TableDropdown
+          dropdownOptions={customerIds}
+          dropdownType="Customers"
+          dropdownValue={selectedCustomer}
+          setValue={setSelectedCustomer}
+        />
+        <span>Month: </span>
+        <TableDropdown
+          dropdownOptions={lastThreeMonths}
+          dropdownType="Months"
+          dropdownValue={selectedMonth}
+          setValue={setSelectedMonth}
+        />
+      </div>
     </div>
   );
 };

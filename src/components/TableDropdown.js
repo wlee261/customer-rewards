@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import "../styles/TableDropdown.css";
+
 const TableDropdown = ({
   dropdownOptions,
   dropdownType,
@@ -10,8 +12,12 @@ const TableDropdown = ({
     setValue(e.target.value);
   };
   return (
-    <div>
-      <select value={dropdownValue} onChange={handleSelect}>
+    <div className="dropdown-container">
+      <select
+        value={dropdownValue}
+        onChange={handleSelect}
+        className="dropdown"
+      >
         <option value={`All ${dropdownType}`}>All {dropdownType}</option>
         {dropdownOptions.map((dropdownOption) => {
           return (

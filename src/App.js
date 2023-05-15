@@ -1,23 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState, useEffect } from "react";
+import TransactionTable from "./components/TransactionTable";
+
+import getLastThreeMonths from "./utils/getLastThreeMonths";
+import TableHeader from "./components/TableHeader";
 
 function App() {
+  const [lastThreeMonths, setLastThreeMonths] = useState([]);
+  const [selectedCustomer, setSelectedCustomer] = useState("");
+  const [selectedMonth, setSelectedMonth] = useState("");
+
+  useEffect(() => {
+    setLastThreeMonths(getLastThreeMonths());
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <TableHeader
+        lastThreeMonths={lastThreeMonths}
+        selectedCustomer={selectedCustomer}
+        setSelectedCustomer={setSelectedCustomer}
+        selectedMonth={selectedMonth}
+        setSelectedMonth={setSelectedMonth}
+      />
+      <TransactionTable />
     </div>
   );
 }

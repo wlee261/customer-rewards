@@ -1,13 +1,21 @@
 import { useEffect, useState } from "react";
-import { fetchAllTransactions } from "../api/fetchTransactions.api";
 
+import MonthlyTransactionTable from "./MonthlyTransactionTable";
 //display all transactions, sorted by month by default
 //two dropdown menus one that sets customer and one that sets month
 
-const TransactionTable = () => {
-  const [transactions, setTransactions] = useState([]);
-
-  return <div>transaction table</div>;
+const TransactionTable = ({ selectedCustomer, selectedMonth }) => {
+  return selectedMonth.map((month) => {
+    return (
+      <MonthlyTransactionTable
+        key={month}
+        selectedMonth={month}
+        selectedCustomer={
+          selectedCustomer === "All Customers" ? null : selectedCustomer
+        }
+      />
+    );
+  });
 };
 
 export default TransactionTable;

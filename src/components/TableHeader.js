@@ -18,7 +18,7 @@ const TableHeader = ({
 
   return (
     <div>
-      <h2>Showing: All Customers</h2>
+      <h2>Showing: {selectedCustomer}</h2>
       <TableDropdown
         dropdownOptions={customerIds}
         dropdownType="Customers"

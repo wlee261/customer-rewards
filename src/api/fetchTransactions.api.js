@@ -884,10 +884,27 @@ export function fetchTransactionsByCustomer(customerId) {
 //input month is an ISO format string YYYY-MM
 export function fetchTransactionsByMonth(month) {
   const monthTransactions = [...transactions].filter((transaction) => {
-    return month === transaction.transactionDate.slice(5, 11);
+    return month === transaction.transactionDate.slice(0, 7);
   });
   return new Promise((res, rej) => {
     res(monthTransactions);
+  });
+}
+
+export function fetchTransactionsByMonthAndCustomer(month, customer) {
+  let filteredTransactions = [];
+  if (month) {
+    filteredTransactions = transactions.filter((transaction) => {
+      return month === transaction.transactionDate.slice(0, 7);
+    });
+  }
+  if (customer) {
+    filteredTransactions = filteredTransactions.filter((transaction) => {
+      return customer === transaction.customerId;
+    });
+  }
+  return new Promise((res, rej) => {
+    res(filteredTransactions);
   });
 }
 

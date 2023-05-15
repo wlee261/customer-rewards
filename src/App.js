@@ -6,8 +6,8 @@ import TableHeader from "./components/TableHeader";
 
 function App() {
   const [lastThreeMonths, setLastThreeMonths] = useState([]);
-  const [selectedCustomer, setSelectedCustomer] = useState("");
-  const [selectedMonth, setSelectedMonth] = useState("");
+  const [selectedCustomer, setSelectedCustomer] = useState("All Customers");
+  const [selectedMonth, setSelectedMonth] = useState("All Months");
 
   useEffect(() => {
     setLastThreeMonths(getLastThreeMonths());
@@ -22,7 +22,12 @@ function App() {
         selectedMonth={selectedMonth}
         setSelectedMonth={setSelectedMonth}
       />
-      <TransactionTable />
+      <TransactionTable
+        selectedCustomer={selectedCustomer}
+        selectedMonth={
+          selectedMonth === "All Months" ? lastThreeMonths : [selectedMonth]
+        }
+      />
     </div>
   );
 }

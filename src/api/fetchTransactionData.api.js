@@ -1,3 +1,6 @@
+import { getPointsForSingleTransaction } from "../utils/getRewardPoints";
+import getLastThreeMonths from "../utils/getLastThreeMonths";
+
 const transactions = [
   {
     customerId: "X35VEL8EG0J",
@@ -866,16 +869,23 @@ const transactions = [
   },
 ];
 
+const transactionsWithPoints = [...transactions].map((transaction) => {
+  const rewardPoints = getPointsForSingleTransaction(transaction);
+  return { ...transaction, rewardPoints: rewardPoints };
+});
+
 export function fetchAllTransactions() {
   return new Promise((res, rej) => {
-    res(transactions);
+    res(transactionsWithPoints);
   });
 }
 
 export function fetchTransactionsByCustomer(customerId) {
-  const customerTransactions = [...transactions].filter((transaction) => {
-    return customerId === transaction.customerId;
-  });
+  const customerTransactions = [...transactionsWithPoints].filter(
+    (transaction) => {
+      return customerId === transaction.customerId;
+    }
+  );
   return new Promise((res, rej) => {
     res(customerTransactions);
   });
@@ -894,7 +904,7 @@ export function fetchTransactionsByMonth(month) {
 export function fetchTransactionsByMonthAndCustomer(month, customer) {
   let filteredTransactions = [];
   if (month) {
-    filteredTransactions = transactions.filter((transaction) => {
+    filteredTransactions = transactionsWithPoints.filter((transaction) => {
       return month === transaction.transactionDate.slice(0, 7);
     });
   }
@@ -910,10 +920,35 @@ export function fetchTransactionsByMonthAndCustomer(month, customer) {
 
 export function fetchAllCustomerIds() {
   const customerIdsSet = new Set();
-  transactions.forEach((transaction) => {
+  transactionsWithPoints.forEach((transaction) => {
     customerIdsSet.add(transaction.customerId);
   });
   return new Promise((res, rej) => {
     res(customerIdsSet);
+  });
+}
+
+//returns total award points for each month, optionally by customer
+export function getMonthlyRewardPoints(customerId) {
+  const lastThreeMonths = getLastThreeMonths();
+  const rewardPointsByMonth = {};
+  lastThreeMonths.forEach((month) => {
+    rewardPointsByMonth[month] = 0;
+  });
+  let filteredTransactions = [...transactionsWithPoints];
+  if (customerId) {
+    filteredTransactions = transactionsWithPoints.filter((transaction) => {
+      return customerId === transaction.customerId;
+    });
+  }
+  filteredTransactions.forEach((transaction) => {
+    const transactionMonth = transaction.transactionDate.slice(0, 7);
+    if (transactionMonth in rewardPointsByMonth) {
+      rewardPointsByMonth[transactionMonth] += transaction.rewardPoints;
+    }
+  });
+
+  return new Promise((res, rej) => {
+    res(rewardPointsByMonth);
   });
 }

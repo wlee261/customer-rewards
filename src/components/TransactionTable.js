@@ -4,7 +4,11 @@ import MonthlyTransactionTable from "./MonthlyTransactionTable";
 //display all transactions, sorted by month by default
 //two dropdown menus one that sets customer and one that sets month
 
-const TransactionTable = ({ selectedCustomer, selectedMonth }) => {
+const TransactionTable = ({
+  selectedCustomer,
+  selectedMonth,
+  monthlyRewardPoints,
+}) => {
   return selectedMonth.map((month) => {
     return (
       <MonthlyTransactionTable
@@ -13,6 +17,7 @@ const TransactionTable = ({ selectedCustomer, selectedMonth }) => {
         selectedCustomer={
           selectedCustomer === "All Customers" ? null : selectedCustomer
         }
+        rewardPoints={monthlyRewardPoints[month]}
       />
     );
   });

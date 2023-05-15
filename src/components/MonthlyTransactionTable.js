@@ -1,9 +1,13 @@
 import React, { useEffect } from "react";
 
-import { fetchTransactionsByMonthAndCustomer } from "../api/fetchTransactions.api";
+import { fetchTransactionsByMonthAndCustomer } from "../api/fetchTransactionData.api";
 import useFetch from "../hooks/useFetch";
 
-const MonthlyTransactionTable = ({ selectedMonth, selectedCustomer }) => {
+const MonthlyTransactionTable = ({
+  selectedMonth,
+  selectedCustomer,
+  rewardPoints,
+}) => {
   const {
     data: transactions,
     error,
@@ -22,6 +26,7 @@ const MonthlyTransactionTable = ({ selectedMonth, selectedCustomer }) => {
   return (
     <div>
       <h3>{selectedMonth}</h3>
+      <h4>Points This Month: {rewardPoints}</h4>
       <table>
         <thead>
           <tr>
@@ -29,6 +34,7 @@ const MonthlyTransactionTable = ({ selectedMonth, selectedCustomer }) => {
             <th>Transaction ID</th>
             <th>Transaction Amount</th>
             <th>Transaction Date</th>
+            <th>Reward Points</th>
           </tr>
         </thead>
         <tbody>
@@ -38,6 +44,7 @@ const MonthlyTransactionTable = ({ selectedMonth, selectedCustomer }) => {
               customerId,
               transactionAmount,
               transactionDate,
+              rewardPoints,
             }) => {
               return (
                 <tr key={transactionId}>
@@ -45,6 +52,7 @@ const MonthlyTransactionTable = ({ selectedMonth, selectedCustomer }) => {
                   <td>{transactionId}</td>
                   <td>{transactionAmount}</td>
                   <td>{transactionDate}</td>
+                  <td>{rewardPoints}</td>
                 </tr>
               );
             }

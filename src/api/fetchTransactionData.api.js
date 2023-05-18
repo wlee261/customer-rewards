@@ -874,12 +874,14 @@ const transactionsWithPoints = [...transactions].map((transaction) => {
   return { ...transaction, rewardPoints: rewardPoints };
 });
 
+//fetches all transactions
 export function fetchAllTransactions() {
   return new Promise((res, rej) => {
     res(transactionsWithPoints);
   });
 }
 
+//fetches all transactions for a given customerId
 export function fetchTransactionsByCustomer(customerId) {
   const customerTransactions = [...transactionsWithPoints].filter(
     (transaction) => {
@@ -891,6 +893,7 @@ export function fetchTransactionsByCustomer(customerId) {
   });
 }
 
+//fetches all transactions given a month
 //input month is an ISO format string YYYY-MM
 export function fetchTransactionsByMonth(month) {
   const monthTransactions = [...transactions].filter((transaction) => {
@@ -901,6 +904,7 @@ export function fetchTransactionsByMonth(month) {
   });
 }
 
+//fetches all transactions given a month and customer, both arguments are optional
 export function fetchTransactionsByMonthAndCustomer(month, customer) {
   let filteredTransactions = [];
   if (month) {
@@ -918,6 +922,7 @@ export function fetchTransactionsByMonthAndCustomer(month, customer) {
   });
 }
 
+//fetches all unique customer ids and returns as a Set
 export function fetchAllCustomerIds() {
   const customerIdsSet = new Set();
   transactionsWithPoints.forEach((transaction) => {

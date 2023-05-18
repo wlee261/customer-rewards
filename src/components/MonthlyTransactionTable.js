@@ -26,7 +26,7 @@ const MonthlyTransactionTable = ({
   }, [selectedMonth, selectedCustomer]);
 
   const renderTableBody = useCallback(() => {
-    if (transactions.length !== 0) {
+    if (transactions?.length !== 0) {
       return transactions?.map(
         ({
           transactionId,

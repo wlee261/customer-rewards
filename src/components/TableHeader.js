@@ -13,8 +13,8 @@ const TableHeader = ({
   setSelectedMonth,
   monthlyRewardPoints,
 }) => {
-  const [customerIds, setCustomerIds] = useState([]);
   const [totalPoints, setTotalPoints] = useState(0);
+  const [customerIds, setCustomerIds] = useState([]);
 
   useEffect(() => {
     fetchAllCustomerIds().then((data) => setCustomerIds([...data]));
